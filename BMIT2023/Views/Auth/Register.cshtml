@@ -1,0 +1,322 @@
+﻿@model RegisterVM
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family:  'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #3C4454 0%, #2a2f3a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .register-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        . register-title {
+            text-align: center;
+            color:  #333;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom:  18px;
+        }
+
+        . form-label {
+            display:  block;
+            color: #555;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        . form-control {
+            width:  100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        . form-control:focus {
+            outline: none;
+            border-color: #4169E1;
+            box-shadow: 0 0 0 3px rgba(65, 105, 225, 0.1);
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 18px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #999;
+            cursor:  pointer;
+            font-size:  18px;
+            padding:  0;
+        }
+
+        .password-toggle:hover {
+            color: #555;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        . btn-register {
+            width: 100%;
+            padding: 12px;
+            background-color:  #4169E1;
+            color: white;
+            border:  none;
+            border-radius:  4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn-register:hover {
+            background-color: #2f47b8;
+        }
+
+        .btn-register:active {
+            background-color: #263a99;
+        }
+
+        .text-center {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .text-center a {
+            color: #4169E1;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .text-center a:hover {
+            color: #2f47b8;
+        }
+
+        .alert {
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom:  20px;
+            font-size: 13px;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        . error-message {
+            color:  #dc3545;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        . checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        . checkbox-group input {
+            margin-right: 8px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            font-size: 13px;
+            color: #666;
+            cursor: pointer;
+            margin:  0;
+        }
+
+        .checkbox-group a {
+            color: #4169E1;
+            text-decoration: none;
+        }
+
+        .checkbox-group a:hover {
+            color: #2f47b8;
+        }
+
+        @media (max-width: 480px) {
+            .register-container {
+                padding: 30px 20px;
+            }
+
+            .register-title {
+                font-size: 24px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h1 class="register-title">Register</h1>
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger">
+                @foreach (var modelState in ViewData.ModelState.Values)
+                {
+                    @foreach (var error in modelState.Errors)
+                    {
+                        <div>@error.ErrorMessage</div>
+                    }
+                }
+            </div>
+        }
+
+        <form method="post">
+            <div class="form-group">
+                <label class="form-label" for="FullName">Full Name</label>
+                <input type="text" class="form-control" id="FullName" name="FullName" 
+                       placeholder="Enter your full name" value="@Model?.FullName" required>
+                @if (ViewData.ModelState["FullName"]?.Errors.Count > 0)
+                {
+                    <div class="error-message">@ViewData. ModelState["FullName"]. Errors[0].ErrorMessage</div>
+                }
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">ID</label>
+                <input type="text" class="form-control" value="@Model?.UserId" disabled>
+                <small style="color: #999;">Your ID will be generated automatically</small>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="Email">Email</label>
+                <input type="email" class="form-control" id="Email" name="Email" 
+                       placeholder="Enter your email" value="@Model?.Email" required>
+                @if (ViewData.ModelState["Email"]?. Errors.Count > 0)
+                {
+                    <div class="error-message">@ViewData.ModelState["Email"].Errors[0].ErrorMessage</div>
+                }
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="Phone">Phone Number</label>
+                <input type="tel" class="form-control" id="Phone" name="Phone" 
+                       placeholder="Enter your phone number" value="@Model?.Phone" required>
+                @if (ViewData.ModelState["Phone"]?.Errors. Count > 0)
+                {
+                    <div class="error-message">@ViewData.ModelState["Phone"].Errors[0].ErrorMessage</div>
+                }
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label" for="Password">Password</label>
+                    <input type="password" class="form-control" id="Password" name="Password" 
+                           placeholder="Enter password" required>
+                    @if (ViewData.ModelState["Password"]?.Errors.Count > 0)
+                    {
+                        <div class="error-message">@ViewData.ModelState["Password"].Errors[0]. ErrorMessage</div>
+                    }
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="ConfirmPassword">Confirm Password</label>
+                    <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" 
+                           placeholder="Confirm password" required>
+                    @if (ViewData.ModelState["ConfirmPassword"]?.Errors.Count > 0)
+                    {
+                        <div class="error-message">@ViewData.ModelState["ConfirmPassword"].Errors[0].ErrorMessage</div>
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="Gender">Gender</label>
+                <select class="form-control" id="Gender" name="Gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="M" @(Model?.Gender == "M" ? "selected" : "")>Male</option>
+                    <option value="F" @(Model?.Gender == "F" ?  "selected" : "")>Female</option>
+                    <option value="O" @(Model?.Gender == "O" ? "selected" : "")>Other</option>
+                </select>
+                @if (ViewData.ModelState["Gender"]?.Errors.Count > 0)
+                {
+                    <div class="error-message">@ViewData.ModelState["Gender"]. Errors[0].ErrorMessage</div>
+                }
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="Terms" name="Terms" required>
+                <label for="Terms">I agree to the <a href="#">Terms and Conditions</a></label>
+            </div>
+
+            <button type="submit" class="btn-register">Register</button>
+
+            <div class="text-center">
+                Already have an account? <a href="@Url.Action("Login", "Auth")">Login Here</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

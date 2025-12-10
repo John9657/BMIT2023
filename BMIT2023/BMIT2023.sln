@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35806.99
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BMIT2023", "BMIT2023.csproj", "{0A712430-2208-4789-8E94-27DE088523BC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0A712430-2208-4789-8E94-27DE088523BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A712430-2208-4789-8E94-27DE088523BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A712430-2208-4789-8E94-27DE088523BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A712430-2208-4789-8E94-27DE088523BC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2D15B827-46F3-45C5-A3D5-ED2E9C579C11}
+	EndGlobalSection
+EndGlobal
