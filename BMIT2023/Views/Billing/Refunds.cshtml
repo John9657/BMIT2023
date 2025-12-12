@@ -1,0 +1,79 @@
+@{
+    ViewData["Title"] = "Refunds";
+}
+
+@model List<Refund>
+
+<div class="container-fluid mt-5">
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h1>Refund Requests</h1>
+        </div>
+        <div class="col-md-6 text-right">
+            <a href="/Billing/RequestRefund" class="btn btn-success">Request Refund</a>
+        </div>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-hover table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Refund Reference</th>
+                            <th>Student</th>
+                            <th>Amount</th>
+                            <th>Reason</th>
+                            <th>Requested</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var refund in Model.OrderByDescending(x => x.RequestedDate))
+                        {
+                            <tr>
+                                <td>@refund.RefundReference</td>
+                                <td>@refund.StudentBillingProfile?.Student?.FullName</td>
+                                <td>$@refund.RefundAmount.ToString("F2")</td>
+                                <td>@refund.RefundReason</td>
+                                <td>@refund.RequestedDate.ToString("yyyy-MM-dd")</td>
+                                <td>
+                                    <span class="badge badge-@GetStatusBadgeClass(refund.Status)">
+                                        @refund.Status
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="/Billing/RefundDetail/@refund.Id" class="btn btn-sm btn-info">Details</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">No Refund Requests</h4>
+            <p>No refund requests have been made. <a href="/Billing/RequestRefund">Request a refund</a></p>
+        </div>
+    }
+</div>
+
+@functions {
+    string GetStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Completed" => "success",
+            "Approved" => "info",
+            "Rejected" => "danger",
+            "Pending" => "warning",
+            "Processing" => "primary",
+            _ => "secondary"
+        };
+    }
+}

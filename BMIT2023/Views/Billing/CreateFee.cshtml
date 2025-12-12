@@ -1,0 +1,98 @@
+@{
+    ViewData["Title"] = "Create Fee";
+}
+
+@model FeeStructure
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4>Create New Fee</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div class="form-group">
+                            <label for="FeeType">Fee Type</label>
+                            <input type="text" class="form-control" id="FeeType" name="FeeType" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Description">Description</label>
+                            <textarea class="form-control" id="Description" name="Description" rows="3" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Amount">Amount</label>
+                            <input type="number" step="0.01" class="form-control" id="Amount" name="Amount" required min="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Currency">Currency</label>
+                            <input type="text" class="form-control" id="Currency" name="Currency" value="USD" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ApplicableTo">Applicable To</label>
+                            <select class="form-control" id="ApplicableTo" name="ApplicableTo">
+                                <option value="All">All Students</option>
+                                <option value="SpecificGroup">Specific Group</option>
+                                <option value="ByProgram">By Program</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ApplicableValue">Applicable Value</label>
+                            <input type="text" class="form-control" id="ApplicableValue" name="ApplicableValue">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="FrequencyInMonths">Frequency (Months)</label>
+                                <input type="number" class="form-control" id="FrequencyInMonths" name="FrequencyInMonths" placeholder="Leave blank for one-time">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="EffectiveFrom">Effective From</label>
+                                <input type="date" class="form-control" id="EffectiveFrom" name="EffectiveFrom" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="EffectiveTo">Effective To</label>
+                                <input type="date" class="form-control" id="EffectiveTo" name="EffectiveTo">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="IsMandatory" name="IsMandatory" checked>
+                                    <label class="custom-control-label" for="IsMandatory">Mandatory</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="IsActive" name="IsActive" checked>
+                                    <label class="custom-control-label" for="IsActive">Active</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="IsRefundable" name="IsRefundable" checked>
+                                    <label class="custom-control-label" for="IsRefundable">Refundable</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">Create Fee</button>
+                            <a href="/Billing/Fees" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

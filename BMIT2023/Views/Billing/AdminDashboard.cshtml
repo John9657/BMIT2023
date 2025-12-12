@@ -1,0 +1,129 @@
+@{
+    ViewData["Title"] = "Admin Billing Dashboard";
+}
+
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="mb-4">Admin Billing Dashboard</h1>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Invoiced (This Month)</h5>
+                    <h2>$@ViewBag.TotalInvoiced?.ToString("F2")</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Collected (This Month)</h5>
+                    <h2>$@ViewBag.TotalCollected?.ToString("F2")</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Pending Payments</h5>
+                    <h2>@ViewBag.PendingPaymentCount</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-danger text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Overdue Invoices</h5>
+                    <h2>@ViewBag.OverdueInvoiceCount</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5>Invoice Management</h5>
+                </div>
+                <div class="card-body">
+                    <a href="/Billing/Invoices" class="btn btn-outline-primary btn-block mb-2">View All Invoices</a>
+                    <a href="/Billing/CreateInvoice" class="btn btn-outline-success btn-block">Create Invoice</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5>Payment Management</h5>
+                </div>
+                <div class="card-body">
+                    <a href="/Billing/Payments" class="btn btn-outline-primary btn-block mb-2">View Payments</a>
+                    <a href="/Billing/MakePayment" class="btn btn-outline-success btn-block">Record Payment</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5>Refund Management</h5>
+                </div>
+                <div class="card-body">
+                    <a href="/Billing/Refunds" class="btn btn-outline-primary btn-block mb-2">View Refunds</a>
+                    <a href="/Billing/RequestRefund" class="btn btn-outline-warning btn-block">Request Refund</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5>Reports</h5>
+                </div>
+                <div class="card-body">
+                    <a href="/Billing/Reports" class="btn btn-outline-primary btn-block mb-2">View Reports</a>
+                    <a href="/Billing/GenerateReport" class="btn btn-outline-success btn-block">Generate Report</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h5>Dunning Notices</h5>
+                </div>
+                <div class="card-body">
+                    <p>Monitor and manage dunning notices for overdue accounts.</p>
+                    <a href="/Billing/DunningNotices" class="btn btn-outline-danger btn-block mb-2">View Notices</a>
+                    <form method="post" action="/Billing/GenerateAutomaticDunning" style="display: inline;">
+                        <button type="submit" class="btn btn-outline-warning btn-block">Generate Automatic Notices</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5>Fee Management</h5>
+                </div>
+                <div class="card-body">
+                    <p>Manage fee structures and payment gateway settings.</p>
+                    <a href="/Billing/Fees" class="btn btn-outline-primary btn-block mb-2">Manage Fees</a>
+                    <a href="/Billing/PaymentGateways" class="btn btn-outline-info btn-block">Payment Gateways</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .btn-block {
+        display: block;
+        width: 100%;
+    }
+</style>

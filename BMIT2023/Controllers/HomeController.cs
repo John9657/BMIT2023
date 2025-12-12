@@ -15,6 +15,12 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        // Redirect to Billing Dashboard if user is logged in
+        var userRole = TempData["UserRole"]?.ToString();
+        if (!string.IsNullOrEmpty(userRole))
+        {
+            return RedirectToAction("Dashboard", "Billing");
+        }
         return View();
     }
 

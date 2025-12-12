@@ -1,0 +1,66 @@
+@{
+    ViewData["Title"] = "Financial Reports";
+}
+
+@model List<FinancialReport>
+
+<div class="container-fluid mt-5">
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h1>Financial Reports</h1>
+        </div>
+        <div class="col-md-6 text-right">
+            <a href="/Billing/GenerateReport" class="btn btn-success">Generate Report</a>
+        </div>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-hover table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Report Name</th>
+                            <th>Type</th>
+                            <th>Period</th>
+                            <th>Total Invoiced</th>
+                            <th>Total Collected</th>
+                            <th>Outstanding</th>
+                            <th>Collection Rate</th>
+                            <th>Generated Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var report in Model.OrderByDescending(x => x.GeneratedDate))
+                        {
+                            <tr>
+                                <td>@report.ReportName</td>
+                                <td><span class="badge badge-info">@report.ReportType</span></td>
+                                <td>@report.FromDate.ToString("yyyy-MM-dd") to @report.ToDate.ToString("yyyy-MM-dd")</td>
+                                <td>$@report.TotalInvoiced.ToString("F2")</td>
+                                <td>$@report.TotalCollected.ToString("F2")</td>
+                                <td>$@report.TotalOutstanding.ToString("F2")</td>
+                                <td>
+                                    <strong>@report.CollectionRate.ToString("F1")%</strong>
+                                </td>
+                                <td>@report.GeneratedDate.ToString("yyyy-MM-dd HH:mm")</td>
+                                <td>
+                                    <a href="/Billing/ReportDetail/@report.Id" class="btn btn-sm btn-info">View</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">No Reports</h4>
+            <p>No financial reports have been generated yet. <a href="/Billing/GenerateReport">Create one now</a></p>
+        </div>
+    }
+</div>

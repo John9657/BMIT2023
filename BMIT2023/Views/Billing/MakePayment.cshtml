@@ -1,0 +1,97 @@
+@{
+    ViewData["Title"] = "Make Payment";
+}
+
+@model Payment
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h4>Record Payment</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div class="form-group">
+                            <label for="StudentBillingProfileId">Student</label>
+                            <select class="form-control" id="StudentBillingProfileId" name="StudentBillingProfileId" required>
+                                <option value="">-- Select Student --</option>
+                                @if (ViewBag.Students != null)
+                                {
+                                    @foreach (var student in ViewBag.Students)
+                                    {
+                                        <option value="@student.Id">@student.Student?.FullName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="InvoiceId">Invoice (Optional)</label>
+                            <select class="form-control" id="InvoiceId" name="InvoiceId">
+                                <option value="">-- Select Invoice (Optional) --</option>
+                                @if (ViewBag.Invoices != null)
+                                {
+                                    @foreach (var invoice in ViewBag.Invoices)
+                                    {
+                                        <option value="@invoice.Id">@invoice.InvoiceNumber - $@invoice.AmountDue.ToString("F2")</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Amount">Payment Amount</label>
+                            <input type="number" step="0.01" class="form-control" id="Amount" name="Amount" required min="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="PaymentMethod">Payment Method</label>
+                            <select class="form-control" id="PaymentMethod" name="PaymentMethod" required>
+                                <option value="">-- Select Payment Method --</option>
+                                <option value="CreditCard">Credit Card</option>
+                                <option value="DebitCard">Debit Card</option>
+                                <option value="BankTransfer">Bank Transfer</option>
+                                <option value="Cheque">Cheque</option>
+                                <option value="Cash">Cash</option>
+                                <option value="OnlineGateway">Online Gateway</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="PaymentGatewayId">Payment Gateway</label>
+                            <select class="form-control" id="PaymentGatewayId" name="PaymentGatewayId">
+                                <option value="">-- Select Gateway (Optional) --</option>
+                                @if (ViewBag.PaymentGateways != null)
+                                {
+                                    @foreach (var gateway in ViewBag.PaymentGateways)
+                                    {
+                                        <option value="@gateway.Id">@gateway.GatewayName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Notes">Notes</label>
+                            <textarea class="form-control" id="Notes" name="Notes" rows="2"></textarea>
+                        </div>
+
+                        @if (ViewData.ModelState[""]?.Errors.Count > 0)
+                        {
+                            <div class="alert alert-danger">
+                                @ViewData.ModelState[""].Errors[0].ErrorMessage
+                            </div>
+                        }
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">Process Payment</button>
+                            <a href="/Billing/Payments" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -66,7 +66,8 @@ namespace BMIT2023.Controllers
                     // Success! You should now set a session/cookie here to maintain login state.
                     TempData["UserRole"] = role; // Storing role temporarily for demo
                     TempData["UserId"] = id;
-                    return RedirectToAction("Index", "Home");
+                    // Redirect to Billing Dashboard instead of Home
+                    return RedirectToAction("Dashboard", "Billing");
                 }
 
                 ModelState.AddModelError("", "Invalid User ID or Password");

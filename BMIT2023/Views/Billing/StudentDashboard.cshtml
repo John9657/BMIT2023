@@ -1,0 +1,128 @@
+@{
+    ViewData["Title"] = "Student Billing Dashboard";
+}
+
+@model StudentBillingProfile
+
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="mb-4">My Billing Dashboard</h1>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-danger text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Outstanding Balance</h5>
+                    <h2>$@Model.TotalOutstanding.ToString("F2")</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Credit Balance</h5>
+                    <h2>$@Model.CreditBalance.ToString("F2")</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Paid</h5>
+                    <h2>$@Model.TotalPaid.ToString("F2")</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card" style="background-color: @(Model.BillingStatus == "Active" ? "#28a745" : "#dc3545"); color: white;">
+                <div class="card-body">
+                    <h5 class="card-title">Billing Status</h5>
+                    <h2>@Model.BillingStatus</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5>Recent Invoices</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.Invoices != null && Model.Invoices.Any())
+                    {
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Invoice Number</th>
+                                    <th>Amount</th>
+                                    <th>Due Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var invoice in Model.Invoices.OrderByDescending(x => x.InvoiceDate).Take(5))
+                                {
+                                    <tr>
+                                        <td>@invoice.InvoiceNumber</td>
+                                        <td>$@invoice.TotalAmount.ToString("F2")</td>
+                                        <td>@invoice.DueDate.ToString("yyyy-MM-dd")</td>
+                                        <td>
+                                            <span class="badge badge-@(invoice.Status == "Paid" ? "success" : invoice.Status == "Overdue" ? "danger" : "warning")">
+                                                @invoice.Status
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a href="/Billing/InvoiceDetail/@invoice.Id" class="btn btn-sm btn-info">Details</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p class="text-muted">No invoices found.</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <div class="card-header bg-success text-white">
+                    <h5>Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <a href="/Billing/Invoices" class="btn btn-outline-primary btn-block mb-2">View All Invoices</a>
+                    <a href="/Billing/MakePayment" class="btn btn-success btn-block mb-2">Make Payment</a>
+                    <a href="/Billing/RequestRefund" class="btn btn-warning btn-block mb-2">Request Refund</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5>Billing Information</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Phone:</strong> @(string.IsNullOrEmpty(Model.Phone) ? "Not provided" : Model.Phone)</p>
+                    <p><strong>Email:</strong> @Model.Student?.Email</p>
+                    <p><strong>Address:</strong> @(string.IsNullOrEmpty(Model.BillingAddress) ? "Not provided" : Model.BillingAddress)</p>
+                    <p><strong>Last Payment:</strong> @(Model.LastPaymentDate?.ToString("yyyy-MM-dd") ?? "Never")</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .btn-block {
+        display: block;
+        width: 100%;
+    }
+</style>

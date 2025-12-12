@@ -1,0 +1,83 @@
+@{
+    ViewData["Title"] = "Manage Fees";
+}
+
+@model List<FeeStructure>
+
+<div class="container-fluid mt-5">
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h1>Fee Structures</h1>
+        </div>
+        <div class="col-md-6 text-right">
+            <a href="/Billing/CreateFee" class="btn btn-success">Add New Fee</a>
+        </div>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-hover table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Fee Type</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Frequency</th>
+                            <th>Mandatory</th>
+                            <th>Active</th>
+                            <th>Refundable</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var fee in Model.OrderBy(x => x.FeeType))
+                        {
+                            <tr>
+                                <td>@fee.FeeType</td>
+                                <td>@fee.Description</td>
+                                <td><strong>$@fee.Amount.ToString("F2")</strong></td>
+                                <td>
+                                    @if (fee.FrequencyInMonths.HasValue)
+                                    {
+                                        @(fee.FrequencyInMonths == 1 ? "Monthly" : fee.FrequencyInMonths == 12 ? "Yearly" : $"Every {fee.FrequencyInMonths} months")
+                                    }
+                                    else
+                                    {
+                                        <span>One-time</span>
+                                    }
+                                </td>
+                                <td>
+                                    <span class="badge badge-@(fee.IsMandatory ? "danger" : "warning")">
+                                        @(fee.IsMandatory ? "Yes" : "No")
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge badge-@(fee.IsActive ? "success" : "secondary")">
+                                        @(fee.IsActive ? "Yes" : "No")
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge badge-@(fee.IsRefundable ? "success" : "danger")">
+                                        @(fee.IsRefundable ? "Yes" : "No")
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="/Billing/EditFee/@fee.Id" class="btn btn-sm btn-warning">Edit</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">No Fees Configured</h4>
+            <p>No fee structures have been set up yet. <a href="/Billing/CreateFee">Create one now</a></p>
+        </div>
+    }
+</div>

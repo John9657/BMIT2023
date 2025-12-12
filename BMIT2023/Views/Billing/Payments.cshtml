@@ -1,0 +1,85 @@
+@{
+    ViewData["Title"] = "Payments";
+}
+
+@model List<Payment>
+
+<div class="container-fluid mt-5">
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h1>Payment Records</h1>
+        </div>
+        <div class="col-md-6 text-right">
+            <a href="/Billing/MakePayment" class="btn btn-success">Record Payment</a>
+        </div>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-hover table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Payment Reference</th>
+                            <th>Student</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Method</th>
+                            <th>Status</th>
+                            <th>Reconciled</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var payment in Model.OrderByDescending(x => x.PaymentDate))
+                        {
+                            <tr>
+                                <td>@payment.PaymentReference</td>
+                                <td>@payment.StudentBillingProfile?.Student?.FullName</td>
+                                <td>$@payment.Amount.ToString("F2")</td>
+                                <td>@payment.PaymentDate.ToString("yyyy-MM-dd HH:mm")</td>
+                                <td>@payment.PaymentMethod</td>
+                                <td>
+                                    <span class="badge badge-@GetStatusBadgeClass(payment.Status)">
+                                        @payment.Status
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge badge-@(payment.IsReconciled ? "success" : "warning")">
+                                        @(payment.IsReconciled ? "Yes" : "No")
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="/Billing/PaymentDetail/@payment.Id" class="btn btn-sm btn-info">Details</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">No Payments</h4>
+            <p>There are no payment records yet. <a href="/Billing/MakePayment">Record a payment</a></p>
+        </div>
+    }
+</div>
+
+@functions {
+    string GetStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Successful" => "success",
+            "Failed" => "danger",
+            "Processing" => "info",
+            "Pending" => "warning",
+            "Cancelled" => "secondary",
+            _ => "secondary"
+        };
+    }
+}

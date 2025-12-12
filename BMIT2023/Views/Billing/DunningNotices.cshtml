@@ -1,0 +1,68 @@
+@{
+    ViewData["Title"] = "Dunning Notices";
+}
+
+@model List<DunningNotice>
+
+<div class="container-fluid mt-5">
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h1>Dunning Notices</h1>
+        </div>
+        <div class="col-md-6 text-right">
+            <form method="post" action="/Billing/GenerateAutomaticDunning" style="display: inline;">
+                <button type="submit" class="btn btn-warning">Generate Automatic Notices</button>
+            </form>
+        </div>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-hover table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Notice Number</th>
+                            <th>Student</th>
+                            <th>Level</th>
+                            <th>Outstanding</th>
+                            <th>Notice Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var notice in Model.OrderByDescending(x => x.NoticeDate))
+                        {
+                            <tr class="@(notice.Status == "Escalated" ? "table-danger" : "")">
+                                <td>@notice.NoticeNumber</td>
+                                <td>@notice.StudentBillingProfile?.Student?.FullName</td>
+                                <td>
+                                    <span class="badge badge-danger">@notice.NoticeLevel</span>
+                                </td>
+                                <td>$@notice.OutstandingAmount.ToString("F2")</td>
+                                <td>@notice.NoticeDate.ToString("yyyy-MM-dd")</td>
+                                <td>
+                                    <span class="badge badge-@(notice.Status == "Resolved" ? "success" : notice.Status == "Escalated" ? "danger" : "warning")">
+                                        @notice.Status
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="/Billing/DunningNoticeDetail/@notice.Id" class="btn btn-sm btn-info">Details</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">No Notices</h4>
+            <p>No dunning notices have been generated. <button class="btn btn-warning" type="button" onclick="document.forms[0].submit();">Generate Automatic Notices</button></p>
+        </div>
+    }
+</div>

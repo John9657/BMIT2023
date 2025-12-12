@@ -1,0 +1,103 @@
+@{
+    ViewData["Title"] = "Generate Report";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h4>Generate Financial Report</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header">Daily Revenue Report</div>
+                                <div class="card-body">
+                                    <form method="post" action="/Billing/GenerateDailyReport">
+                                        <div class="form-group">
+                                            <label for="date">Select Date</label>
+                                            <input type="date" class="form-control" id="date" name="date" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-info btn-block">Generate</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header">Monthly Revenue Report</div>
+                                <div class="card-body">
+                                    <form method="post" action="/Billing/GenerateMonthlyReport">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="year">Year</label>
+                                                <input type="number" class="form-control" id="year" name="year" value="@DateTime.Now.Year" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="month">Month</label>
+                                                <select class="form-control" id="month" name="month" required>
+                                                    @{
+                                                        var months = new[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+                                                    }
+                                                    @for (int i = 1; i <= 12; i++)
+                                                    {
+                                                        if (i == DateTime.Now.Month)
+                                                        {
+                                                            <option value="@i" selected>@months[i - 1]</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@i">@months[i - 1]</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-info btn-block">Generate</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header">Annual Revenue Report</div>
+                                <div class="card-body">
+                                    <form method="post" action="/Billing/GenerateAnnualReport">
+                                        <div class="form-group">
+                                            <label for="yearannual">Select Year</label>
+                                            <input type="number" class="form-control" id="yearannual" name="year" value="@DateTime.Now.Year" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-info btn-block">Generate</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header">Outstanding Invoices</div>
+                                <div class="card-body">
+                                    <p class="text-muted">View all outstanding invoices.</p>
+                                    <a href="/Billing/Reports" class="btn btn-info btn-block">View Reports</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .btn-block {
+        display: block;
+        width: 100%;
+    }
+</style>

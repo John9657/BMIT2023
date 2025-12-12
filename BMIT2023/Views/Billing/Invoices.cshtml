@@ -1,0 +1,83 @@
+@{
+    ViewData["Title"] = "Invoices";
+}
+
+@model List<Invoice>
+
+<div class="container-fluid mt-5">
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h1>Invoices</h1>
+        </div>
+        <div class="col-md-6 text-right">
+            <a href="/Billing/CreateInvoice" class="btn btn-success">Create Invoice</a>
+        </div>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-hover table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Invoice Number</th>
+                            <th>Student</th>
+                            <th>Amount</th>
+                            <th>Due Date</th>
+                            <th>Status</th>
+                            <th>Paid Amount</th>
+                            <th>Outstanding</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var invoice in Model.OrderByDescending(x => x.InvoiceDate))
+                        {
+                            <tr>
+                                <td>
+                                    <strong>@invoice.InvoiceNumber</strong>
+                                </td>
+                                <td>@invoice.StudentBillingProfile?.Student?.FullName</td>
+                                <td>$@invoice.TotalAmount.ToString("F2")</td>
+                                <td>@invoice.DueDate.ToString("yyyy-MM-dd")</td>
+                                <td>
+                                    <span class="badge badge-@GetStatusBadgeClass(invoice.Status)">
+                                        @invoice.Status
+                                    </span>
+                                </td>
+                                <td>$@invoice.AmountPaid.ToString("F2")</td>
+                                <td>$@invoice.AmountDue.ToString("F2")</td>
+                                <td>
+                                    <a href="/Billing/InvoiceDetail/@invoice.Id" class="btn btn-sm btn-info">Details</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">No Invoices</h4>
+            <p>There are currently no invoices in the system. <a href="/Billing/CreateInvoice">Create one now</a></p>
+        </div>
+    }
+</div>
+
+@functions {
+    string GetStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Paid" => "success",
+            "Overdue" => "danger",
+            "PartiallyPaid" => "warning",
+            "Pending" => "info",
+            "Cancelled" => "secondary",
+            _ => "secondary"
+        };
+    }
+}

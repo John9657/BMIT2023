@@ -1,0 +1,157 @@
+@{
+    ViewData["Title"] = "Billing Dashboard";
+}
+
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="mb-4">Billing & Payment Dashboard</h1>
+        </div>
+    </div>
+
+    @if (ViewBag.UserRole == "Student")
+    {
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card bg-info text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Outstanding Balance</h5>
+                        <h2>$@ViewBag.OutstandingAmount?.ToString("F2")</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Credit Balance</h5>
+                        <h2>$@ViewBag.CreditBalance?.ToString("F2")</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-warning text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Pending Invoices</h5>
+                        <h2>@ViewBag.InvoiceCount</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Student ID</h5>
+                        <p class="card-text">@ViewBag.UserId</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5>Quick Actions</h5>
+                    </div>
+                    <div class="card-body">
+                        <a href="/Billing/Invoices" class="btn btn-outline-primary btn-block mb-2">View Invoices</a>
+                        <a href="/Billing/MakePayment" class="btn btn-outline-success btn-block mb-2">Make Payment</a>
+                        <a href="/Billing/RequestRefund" class="btn btn-outline-warning btn-block mb-2">Request Refund</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5>Billing Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Email:</strong> @ViewBag.Student?.Email</p>
+                        <p><strong>Status:</strong> <span class="badge badge-success">@ViewBag.BillingProfile?.BillingStatus</span></p>
+                        <p><strong>Phone:</strong> @ViewBag.BillingProfile?.Phone</p>
+                        <p><strong>Address:</strong> @ViewBag.BillingProfile?.BillingAddress</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card bg-info text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Invoiced (This Month)</h5>
+                        <h2>$@ViewBag.TotalInvoiced?.ToString("F2")</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Collected (This Month)</h5>
+                        <h2>$@ViewBag.TotalCollected?.ToString("F2")</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-warning text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Pending Payments</h5>
+                        <h2>@ViewBag.PendingPaymentCount</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-danger text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Overdue Invoices</h5>
+                        <h2>@ViewBag.OverdueInvoiceCount</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5>Invoice Management</h5>
+                    </div>
+                    <div class="card-body">
+                        <a href="/Billing/Invoices" class="btn btn-outline-primary btn-block mb-2">View All Invoices</a>
+                        <a href="/Billing/CreateInvoice" class="btn btn-outline-success btn-block">Create Invoice</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5>Payment & Refund</h5>
+                    </div>
+                    <div class="card-body">
+                        <a href="/Billing/Payments" class="btn btn-outline-primary btn-block mb-2">View Payments</a>
+                        <a href="/Billing/Refunds" class="btn btn-outline-warning btn-block">Manage Refunds</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5>Reports & Monitoring</h5>
+                    </div>
+                    <div class="card-body">
+                        <a href="/Billing/Reports" class="btn btn-outline-primary btn-block mb-2">Financial Reports</a>
+                        <a href="/Billing/DunningNotices" class="btn btn-outline-danger btn-block">Dunning Notices</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .btn-block {
+        display: block;
+        width: 100%;
+    }
+</style>
