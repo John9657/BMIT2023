@@ -1,0 +1,210 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+
+/* --- Login/Register Page Styles --- */
+
+/* Wrapper to center the card on the page */
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh; /* Takes up most of the viewport */
+}
+
+/* The main card container */
+.auth-card {
+    display: flex;
+    width: 900px;
+    max-width: 95%;
+    background-color: #fff;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    overflow: hidden; /* Ensures image/gradient respects corners */
+    min-height: 550px;
+}
+
+/* Left side (Gradient/Image) */
+/* Left side (Now Black with Logo) */
+.auth-side-image {
+    flex: 1;
+    background-color: #999DA0; /* Changed to Black */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Style for the Logo */
+.auth-logo {
+    max-width: 80%; /* Ensures it doesn't overflow */
+    max-height: 200px; /* Limits height so it's not too huge */
+    object-fit: contain;
+    margin-bottom: 20px;
+}
+
+/* Right side (Form) */
+.auth-form-container {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.auth-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+/* Custom Input Styling */
+.modern-input {
+    border-radius: 8px;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    margin-bottom: 1rem;
+    background-color: #fff;
+}
+
+    .modern-input:focus {
+        box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.2); /* Purple glow */
+        border-color: #6a11cb;
+    }
+
+/* Custom Button Styling */
+.btn-modern {
+    background-color: #6f42c1; /* Purple color from reference */
+    border-color: #6f42c1;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    width: 100%;
+    margin-top: 1rem;
+    transition: all 0.3s;
+}
+
+    .btn-modern:hover {
+        background-color: #5a32a3;
+        border-color: #5a32a3;
+        color: #fff;
+    }
+
+.auth-links {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+    .auth-links a {
+        color: #666;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+
+        .auth-links a:hover {
+            color: #6f42c1;
+            text-decoration: underline;
+        }
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+    .auth-card {
+        flex-direction: column;
+    }
+
+    .auth-side-image {
+        min-height: 150px;
+    }
+}
+
+/* --- Home Page / Student Dashboard --- */
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: white;
+    padding: 3rem 2rem;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 20px rgba(37, 117, 252, 0.2);
+}
+
+/* Featured Courses Carousel */
+.course-carousel-item {
+    height: 300px;
+    background-color: #333;
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.course-carousel-caption {
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent black overlay */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    color: white;
+}
+
+.course-carousel-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+}
+
+/* Dashboard Info Cards */
+.info-card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+    height: 100%;
+}
+
+    .info-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+
+.card-icon {
+    font-size: 2rem;
+    color: #6a11cb;
+    margin-bottom: 1rem;
+}
+

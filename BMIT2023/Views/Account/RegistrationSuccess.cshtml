@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Registration Successful";
+    Layout = "_AuthLayout";
+}
+
+<div class="auth-wrapper">
+    <div class="auth-card" style="min-height: 400px;"> 
+        <div class="auth-side-image">
+            <img src="~/images/logo.png" alt="Company Logo" class="auth-logo" />
+            <h4 class="text-white mt-3">Welcome Aboard!</h4>
+        </div>
+
+        <div class="auth-form-container text-center">
+            <h1 class="text-success mb-3 fw-bold">Success!</h1>
+            <p class="lead mb-4">Your student account has been created.</p>
+
+            <div class="alert alert-primary p-4 shadow-sm border-0 rounded-3 mb-4">
+                <p class="mb-1 text-uppercase text-muted small fw-bold">Your User ID</p>
+                <h1 class="display-4 fw-bold text-primary mb-0">@ViewBag.UserId</h1>
+                <p class="mb-0 mt-2 text-muted small">Please write this down. You need it to login.</p>
+            </div>
+
+            <a asp-action="Login" class="btn btn-modern w-50 mx-auto">Go to Login</a>
+        </div>
+    </div>
+</div>

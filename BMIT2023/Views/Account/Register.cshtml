@@ -1,0 +1,61 @@
+﻿@model BMIT2023.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Student Registration";
+    Layout = "_AuthLayout";
+}
+
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="auth-side-image">
+            <img src="~/images/logo.png" alt="Company Logo" class="auth-logo" />
+            <h4 class="text-white mt-3">Join Us Today</h4>
+            <p class="text-white-50">Student Registration</p>
+        </div>
+
+        <div class="auth-form-container">
+            <h2 class="auth-title">Register</h2>
+
+            <form asp-action="Register" method="post">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger text-center mb-3"></div>
+
+                <div class="form-group mb-2">
+                    <label asp-for="FullName" class="form-label">Full Name</label>
+                    <input asp-for="FullName" class="form-control modern-input" placeholder="John Doe" />
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-2">
+                    <label asp-for="Email" class="form-label">Email Address</label>
+                    <input asp-for="Email" class="form-control modern-input" placeholder="name@example.com" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-2">
+                    <label asp-for="Password" class="form-label">Password</label>
+                    <input asp-for="Password" class="form-control modern-input" placeholder="Create a password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="ConfirmPassword" class="form-label">Confirm Password</label>
+                    <input asp-for="ConfirmPassword" class="form-control modern-input" placeholder="Repeat password" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-modern">Register Student Account</button>
+
+                <div class="auth-links mt-3 text-center">
+                    <span class="text-muted">Already have an ID? </span>
+                    <a asp-controller="Account" asp-action="Login">Login here</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
