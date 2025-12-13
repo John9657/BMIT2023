@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BMIT2023")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+19796d0119773d4ef5db43415e195b0750f9a02e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+604aeb864669f33411e219364b2b06ba8d7f9d06")]
 [assembly: System.Reflection.AssemblyProductAttribute("BMIT2023")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BMIT2023")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
